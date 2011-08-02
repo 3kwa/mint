@@ -71,28 +71,18 @@ class Parser(object):
                     #NOTE: tok still points to first token
 
             if new_state is None:
-                raise WrongToken('[%s] Unexpected token "%s(%r)" at line %d, pos %d' \
-                        % (current_state, token, tok_value, lineno, pos))
+                raise WrongToken(
+                  '[%s] Unexpected token "%s(%r)" at line %d, pos %d' \
+                  % (current_state, token, tok_value, lineno, pos))
+
             # process of new_state
             elif new_state != current_state:
                 if new_state == 'end':
-                    #print current_state, '%s(%r)' % (token, tok_value), new_state
                     callback(tok, stack)
-                    #_print_stack(stack)
                     break
                 current_state = new_state
                 variantes = self.states[current_state]
-            # state callback
-            #print current_state, '%s(%r)' % (token, tok_value), new_state
             callback(tok, stack)
-            #_print_stack(stack)
-
-
-def _print_stack(s):
-    print '[stack]'
-    for i in s:
-        print ' '*4, i
-    print '[end of stack]\n'
 
 
 # utils functions
@@ -264,8 +254,13 @@ tag_parser = Parser((
         ('nested_tag_parser', 'end', pop_stack),
         )),
     ('evaluate', (
+        (TOKEN_WHITESPACE, 'evaluate', skip),
+        (TOKEN_TEXT, 'short_expr', skip),
         (TOKEN_NEWLINE, 'end', pop_stack),
-        (data_parser, 'end', pop_stack),
+        )),
+    ('short_expr', (
+        (TOKEN_TEXT, 'short_expr', py_expr),
+        (TOKEN_NEWLINE, 'end', pop_stack),
         )),
 ))
 
