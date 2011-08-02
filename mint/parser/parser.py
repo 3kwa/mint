@@ -1,8 +1,9 @@
 import itertools
 
-from tokens import *
-from nodes import *
-from markup import Markup
+from mint.lexer import *
+from mint.lexer.base import WrongToken
+from mint.nodes import *
+from mint.markup import Markup
 
 class RecursiveStack(object):
     'Stack of stacks'
@@ -157,12 +158,20 @@ data_parser = Parser((
         (TOKEN_EXPRESSION_END, 'start', py_expr),
         (all_tokens, 'expr', push),
         )),
-    ('short_expr', (
-        (TOKEN_NEWLINE, 'start', py_expr),
+))
+
+# short expr parser
+short_expr_parser = Parser((
+    ('start', (
+        (TOKEN_SHORT_EXPRESSION, 'expr', text_value),
+        (TOKEN_NEWLINE, 'end', py_expr),
+        (all_tokens, 'start', push),
+        )),
+    ('expr', (
+        (TOKEN_NEWLINE, 'expr', push),
         (all_tokens, 'expr', push),
         )),
 ))
-
 
 # tag and tag attributes callbacks
 def tag_name(t, s):
@@ -255,12 +264,7 @@ tag_parser = Parser((
         )),
     ('evaluate', (
         (TOKEN_WHITESPACE, 'evaluate', skip),
-        (TOKEN_TEXT, 'short_expr', skip),
-        (TOKEN_NEWLINE, 'end', pop_stack),
-        )),
-    ('short_expr', (
-        (TOKEN_TEXT, 'short_expr', py_expr),
-        (TOKEN_NEWLINE, 'end', pop_stack),
+        (short_expr_parser, 'end', pop_stack),
         )),
 ))
 
