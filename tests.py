@@ -260,6 +260,17 @@ class Tokenizer(unittest.TestCase):
                           (mint.TOKEN_NEWLINE, '\n', 1, 20),
                           (mint.TOKEN_EOF, 'EOF', 2, 0)])
 
+    def test_tokens6(self):
+        'expression shortcut token'
+        self.assertEqual(list(mint.tokenizer(StringIO('@something= python_expression'))),
+                         [(mint.TOKEN_TAG_START, u'@', 1, 1),
+                         (mint.TOKEN_TEXT, u'something', 1, 2),
+                         (mint.TOKEN_SHORT_EXPRESSION, u'=', 1, 11),
+                         (mint.TOKEN_WHITESPACE, u' ', 1, 12),
+                         (mint.TOKEN_TEXT, u'python_expression', 1, 13),
+                         (mint.TOKEN_NEWLINE, '\n', 1, 30),
+                         (mint.TOKEN_EOF, 'EOF', 2, 0)])
+
     def test_indent(self):
         'One indent'
         self.assertEqual(list(mint.tokenizer(StringIO('    '))),
@@ -371,6 +382,31 @@ class Parser(unittest.TestCase):
                          mint.MintTemplate(body=[
                              mint.TextNode('text content\n', lineno=1, col_offset=1)]))
 
+    def test_short_expression_node(self):
+        'Text node'
+        tree = self.get_mint_tree('text = content')
+        self.assertEqual(tree,
+                         mint.MintTemplate(body=[
+                             mint.TextNode('text = content\n', lineno=1, col_offset=1)]))
+
+    def test_short_expression_node_1(self):
+        'Short expression is text node'
+        tree = self.get_mint_tree('@div = expression')
+        self.assertEqual(tree,
+            mint.MintTemplate(
+                body=[mint.TagNode(u'div', attrs=[], body=[
+                  mint.TextNode(u'= expression\n', lineno=1, col_offset=6)],
+                  lineno=1, col_offset=1)]))
+
+    def test_short_expression_node_2(self):
+        'Short expression'
+        tree = self.get_mint_tree('@div= expression')
+        self.assertEqual(tree,
+            mint.MintTemplate(
+                body=[mint.TagNode(u'div', attrs=[], body=[
+                  mint.ExpressionNode(u'expression', lineno=2, col_offset=3),
+                  mint.TextNode(u'\n', lineno=2, col_offset=19)],
+                  lineno=1, col_offset=1)]))
     def test_expression_node(self):
         'Expression node'
         tree = self.get_mint_tree('{{ expression }}')
@@ -753,7 +789,7 @@ class PprintTests(unittest.TestCase):
 
     def test_tag_big_text(self):
         'Pprint tag with big text content'
-        self.assertEqual(mint.Template('@tag Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.', pprint=True).render(), 
+        self.assertEqual(mint.Template('@tag Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.', pprint=True).render(),
                         '<tag>\n'
                         '  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.\n'
                         '</tag>\n')
