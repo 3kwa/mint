@@ -1,4 +1,5 @@
 from markup import Markup
+from looper import Looper
 
 class Utils(object):
 

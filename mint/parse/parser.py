@@ -2,7 +2,7 @@ import itertools
 
 from mint.lexify import *
 from mint.nodes import *
-from mint.markup import Markup
+from mint.utils.markup import Markup
 
 from __init__ import RecursiveStack
 
