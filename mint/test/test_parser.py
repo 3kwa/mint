@@ -3,7 +3,7 @@ from StringIO import StringIO
 
 import mint
 
-class Parser(unittest.TestCase):
+class ParserTestCase(unittest.TestCase):
 
     def get_mint_tree(self, source):
         return mint.get_mint_tree(mint.tokenizer(StringIO(source)))

@@ -2,7 +2,7 @@ import unittest
 
 import mint
 
-class TagsAndText(unittest.TestCase):
+class TagsAndTextTestCase(unittest.TestCase):
 
     def test_empty(self):
         'Empty template'

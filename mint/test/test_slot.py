@@ -3,7 +3,7 @@ import types
 
 import mint
 
-class Slot(unittest.TestCase):
+class SlotTestCase(unittest.TestCase):
 
     def test_slotdef(self):
         'Slot definition'

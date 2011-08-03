@@ -2,7 +2,7 @@ import unittest
 
 import mint
 
-class PprintTests(unittest.TestCase):
+class PprintTestCase(unittest.TestCase):
 
     def test_empty(self):
         'Pprint not so empty template'

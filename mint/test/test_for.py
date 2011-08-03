@@ -2,7 +2,7 @@ import unittest
 
 import mint
 
-class For(unittest.TestCase):
+class ForTestCase(unittest.TestCase):
 
     def test_for(self):
         'for statement'

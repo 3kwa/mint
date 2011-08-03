@@ -10,7 +10,7 @@ class DummyLoader(object):
         return self.templates[template_name]
 
 
-class Inheritance(unittest.TestCase):
+class InheritanceTestCase(unittest.TestCase):
 
     def test_inheritance(self):
         'One level inheritance'

@@ -2,7 +2,7 @@ import unittest
 
 import mint
 
-class Expression(unittest.TestCase):
+class ExpressionTestCase(unittest.TestCase):
 
     def test_expression(self):
         'Python expression'

@@ -2,7 +2,7 @@ import unittest
 
 import mint
 
-class If(unittest.TestCase):
+class IfTestCase(unittest.TestCase):
 
     def test_if(self):
         'if statement (true)'
