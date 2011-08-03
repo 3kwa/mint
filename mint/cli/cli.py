@@ -2,6 +2,7 @@ import datetime
 from optparse import OptionParser
 
 from printer import Printer
+from mint import Loader
 
 def all_files_by_mask(mask):
     for root, dirs, files in os.walk('.'):
