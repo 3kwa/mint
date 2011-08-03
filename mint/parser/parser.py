@@ -1,7 +1,6 @@
 import itertools
 
-from mint.lexer import *
-from mint.lexer.base import WrongToken
+from mint.lexify import *
 from mint.nodes import *
 from mint.markup import Markup
 

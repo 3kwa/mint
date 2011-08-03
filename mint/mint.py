@@ -20,7 +20,7 @@ from functools import partial
 from collections import deque
 from xml.etree.ElementTree import TreeBuilder as _TreeBuilder, Element
 
-from lexer import *
+from lexify import *
 from parser import *
 from visit import AstWrapper, MintToPythonTransformer, SlotsGetter
 from utils import Utils
