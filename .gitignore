@@ -1,6 +1,6 @@
 *.swp
 *.pyc
-*.swp
+*.swo
 *.diff
 *.mint
 build/

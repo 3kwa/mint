@@ -21,7 +21,7 @@ from collections import deque
 from xml.etree.ElementTree import TreeBuilder as _TreeBuilder, Element
 
 from lexify import *
-from parser import *
+from parse import *
 from visit import AstWrapper, MintToPythonTransformer, SlotsGetter
 from utils import Utils
 
