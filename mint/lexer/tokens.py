@@ -1,6 +1,7 @@
 import re
 
-from base import EOF, TokenUnindent, TokenIndent, TextToken, TokenWrapper
+from __init__ import EOF, TokenUnindent, TokenIndent, TextToken, TokenWrapper
+#from base import EOF, TokenUnindent, TokenIndent, TextToken, TokenWrapper
 
 # constants
 TAG_CHAR = '@'
