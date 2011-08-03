@@ -7,7 +7,7 @@ setup(
     version=version,
     description='Simple indetion based template engine',
     long_description=open('README.rst').read(),
-    py_modules=['mint'],
+    packages=['mint'],
     license='MIT',
     author='Tim Perevezentsev',
     author_email='riffm2005@gmail.com',
